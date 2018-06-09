@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View,TouchableOpacity } from 'react-native';
 import { Camera, Permissions } from 'expo';
 import VideoPlayer from './VideoPlayer';
+import AudioContainer from './AudioContainer';
 
 export default class App extends React.Component {
   state={
@@ -61,20 +62,28 @@ render() {
         flex: 0.12,
         flexDirection: 'row'}}>
           <TouchableOpacity
-          style={{flex: 0.3,height:10,justifyContent: 'center',alignItems: 'center'}}
+          style={{flex: 0.3,height:20,justifyContent: 'center',alignItems: 'center'}}
           onPress = {()=>this.setState({screen:'recorder'})}>
             <Text style={{ fontSize: 18, color: '#000' }}>Recorder</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={{flex: 0.3,height: 10,justifyContent: 'center',alignItems: 'center'}}
+            style={{flex: 0.3,height: 20,justifyContent: 'center',alignItems: 'center'}}
             onPress={()=>this.setState({screen:'player'})}>
               <Text style={{ fontSize: 18,color: '#000' }}>Player</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{flex: 0.3,height: 20,justifyContent: 'center',alignItems: 'center'}}
+            onPress={()=>this.setState({screen:'audio'})}>
+              <Text style={{ fontSize: 18,color: '#000' }}>Audio</Text>
           </TouchableOpacity>
         </View>
         {
           this.state.screen == 'recorder' && this.renderRecorderComponent()
         }{
-          (this.state.screen == 'player' && this.state.fileUrl) ? <VideoPlayer vedioUrl = {this.state.fileUrl}/> : this.renderEmpty()
+          this.state.screen == 'player' && (this.state.fileUrl ? <VideoPlayer vedioUrl = {this.state.fileUrl}/> : this.renderEmpty())
+        }
+        {
+          this.state.screen == 'audio' && <AudioContainer/>
         }
     </View>)
   }
